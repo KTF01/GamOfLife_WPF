@@ -1,0 +1,38 @@
+﻿<Window x:Class="GameOfLife.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameOfLife"
+        mc:Ignorable="d"
+        Title="GameOfLife" Height="600" Width="1000" KeyDown="Window_KeyDown">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Slider Grid.Row="0" Name="speedSlider" Width="100" Value="{Binding Path=SpeedValue}" Minimum="0.01" Maximum="0.5" Thumb.DragDelta="gridSlider_DragDelta" ></Slider>
+                <Label Grid.Row="1" Content="{Binding ElementName=speedSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="Speed: {0:0.##}" HorizontalAlignment="Center" FontSize="15" Padding="0,5,0,0"/>
+            </Grid>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Slider x:Name="gridSlider" Width="100" Value="{Binding Path=SizeValue, Mode=TwoWay}" Minimum="3" Maximum="180" Thumb.DragDelta="UpdateGridSize" ></Slider>
+                <Label Grid.Row="1" Name="SizeLabel" HorizontalAlignment="Center" FontSize="15" Padding="0,5,0,0"/>
+            </Grid>
+            <Label Name="GenerationLabel" Content="Generation: " />
+            <Button Focusable="False" Content="Start" Click="StartButtonClick"/>
+            <Button Focusable="False" Content="Step" Click="Button_Click"/>
+            <Button Focusable="False" Content="Clear" Click="ClearButtonClick"/>
+
+        </StackPanel>
+        <Viewbox x:Name="VB" >
+            <local:GameOfLifeView x:Name="GoLV" Padding="5" />
+        </Viewbox>
+    </DockPanel>
+</Window>
